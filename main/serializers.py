@@ -3,7 +3,7 @@ from .models import Posts, BooksModel, SuggestionModel
 
 
 
-class PostSerializer(serializers.Serializer):
+class PostSerializer(serializers.ModelSerializer):
     MY_CHOICES = (
         ("NEWS", 'News'),
         ("ARTICLES", 'Articles'),
@@ -12,18 +12,23 @@ class PostSerializer(serializers.Serializer):
         ("BOOKS", "Books"),
         ("INTERNATIONAL_PROJECTS", "International Projects"),
     )
-
-    title = serializers.CharField(max_length=50)
-    text = serializers.CharField()
-    category = serializers.ChoiceField(choices=MY_CHOICES)
     picture = serializers.ImageField()
+    class Meta:
+        model = Posts
+        fields = "__all__"
+        # fields = ["title", "text", "picture", "category"]
 
-    def create(self, validated_data):
-        title = validated_data.pop("title")
-        text = validated_data.pop("text")
-        category = validated_data.pop("category")
-        picture = validated_data.pop("picture")
-        return Posts.objects.create(picture=picture, title=title, text=text, category=category)
+    # title = serializers.CharField(max_length=50)
+    # text = serializers.CharField()
+    # category = serializers.ChoiceField(choices=MY_CHOICES)
+    # picture = serializers.ImageField()
+
+    # def create(self, validated_data):
+    #     title = validated_data.pop("title")
+    #     text = validated_data.pop("text")
+    #     category = validated_data.pop("category")
+    #     picture = validated_data.pop("picture")
+    #     return Posts.objects.create(picture=picture, title=title, text=text, category=category)
 
 
 class BookSerializer(serializers.ModelSerializer):

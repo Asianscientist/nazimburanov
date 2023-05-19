@@ -18,7 +18,7 @@ class HomePageViewSet(ViewSet):
 
         news_obj = list(queryset.filter(category="NEWS").order_by("-created_at")[:5].values())
         article_obj = list(queryset.filter(category="ARTICLES").order_by("-created_at")[:5].values())
-        country_image_obj = list(queryset.filter(category="COUNTRYIMAGE").order_by("created_at")[:5].values())
+        country_image_obj = list(queryset.filter(category="CountryImage").order_by("created_at")[:5].values())
         scientific_articles = list(queryset.filter(category="SCIENTIFIC_ARTICLES").order_by("created_at")[:5].values())
         book_obj = list(queryset.filter(category="BOOKS").order_by("-created_at")[:5])
         international_projects = list(queryset.filter(category="INTERNATIONAL_PROJECTS").order_by("-created_at")[:5].values())
@@ -48,7 +48,7 @@ class NewsViewSet(ViewSet):
 
 class CountryImageViewSet(ViewSet):
     def list(self, request):
-        queryset = Posts.objects.filter(category="COUNTRYIMAGE")
+        queryset = Posts.objects.filter(category="CountryImage")
         search_query = request.query_params.get('q', '')
 
         if search_query:
