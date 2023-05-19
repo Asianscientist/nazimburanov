@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
     
 class Posts(models.Model):
@@ -22,7 +23,7 @@ class Posts(models.Model):
         ("SPEECHES", "Speeches"),
         ("PRESENTATIONS", "Presentations")
     )
-    title = models.CharField(max_length=500)
+    title = models.CharField(_(max_length=500))
     text = models.TextField()
     picture = models.ImageField(upload_to='images/')
     category = models.CharField(max_length=50, choices=MY_CHOICES)
