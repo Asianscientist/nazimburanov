@@ -1,54 +1,48 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from rest_framework.viewsets import ViewSet
+from rest_framework.viewsets import ViewSet, ModelViewSet
 from rest_framework.response import Response
 from django.http import HttpResponse
-from .serializers import PostSerializer, SuggestionSerializer, BookSerializer
+from .serializers import PostSerializer, BookSerializer
 from django.db.models import Q
 from rest_framework.pagination import PageNumberPagination
+from rest_framework import permissions
 import json
-
+from django.utils.translation import get_language, activate, gettext
 from . import utils
-from .models import Posts, SuggestionModel, BooksModel
+from .models import Posts, BooksModel, Product
 # Create your views here.
 
 
 class HomePageViewSet(ViewSet):
+    pagination_class = PageNumberPagination
     def list(self, request):
-        
         language = request.LANGUAGE_CODE
         
         queryset = Posts.objects.all()
         search_query = request.query_params.get('q', '')
         if search_query:
             queryset = queryset.filter(Q(title__icontains=search_query) | Q(text__contains=search_query))
-        section_keywords = utils.pair_language(language)
         
-        news_obj = list(queryset.filter(category=section_keywords[0]).order_by("-created_at")[:5].values())
-        article_obj = list(queryset.filter(category=section_keywords[1]).order_by("-created_at")[:5].values())
-        country_image_obj = list(queryset.filter(category=section_keywords[2]).order_by("created_at")[:5].values())
-        scientific_articles = list(queryset.filter(category=section_keywords[3]).order_by("created_at")[:5].values())
-        book_obj = list(queryset.filter(category=section_keywords[4]).order_by("-created_at")[:5])
-        international_projects = list(queryset.filter(category=section_keywords[5]).order_by("-created_at")[:5].values())
-        data = {
-            "news_obj":news_obj, "article_obj":article_obj, "country_image_obj":country_image_obj,
-            "scientific_articles":scientific_articles, "book_obj":book_obj, 
-            "international_projects":international_projects
-        }
-        return Response(data)
+        paginator = self.pagination_class()
+        page = paginator.paginate_queryset(queryset, request)
+        if page is not None:
+            serializer = PostSerializer(page, many=True)
+            return paginator.get_paginated_response(serializer.data)
+        serializer = PostSerializer(queryset, many=True)
 
     def create(self, request):
         serializer = PostSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
-    
+
 class NewsViewSet(ViewSet):
     pagination_class = PageNumberPagination
     def list(self, request):
         language = request.LANGUAGE_CODE
         query_word = "Yangiliklar" if language == 'uz' else "News"        
-        queryset = Posts.objects.filter(category__contains=query_word)
+        queryset = Posts.objects.filter(category=query_word)
         search_query = request.query_params.get('q', '')
 
         if search_query:
@@ -57,7 +51,6 @@ class NewsViewSet(ViewSet):
         paginator = self.pagination_class()
         page = paginator.paginate_queryset(queryset, request)
         if page is not None:
-            print(page)
             serializer = PostSerializer(page, many=True)
             return paginator.get_paginated_response(serializer.data)
         serializer = PostSerializer(queryset, many=True)
@@ -77,32 +70,10 @@ class SampleViewSet(ViewSet):
         paginator = self.pagination_class()
         page = paginator.paginate_queryset(queryset, request)
         if page is not None:
-            print(page)
             serializer = PostSerializer(page, many=True)
             return paginator.get_paginated_response(serializer.data)
         serializer = PostSerializer(queryset, many=True)
         return Response(serializer.data)
-    
-
-class CountryImageViewSet(ViewSet):
-    pagination_class = PageNumberPagination
-    def list(self, request):
-        language = request.LANGUAGE_CODE
-        query_word = "CountryImage" if language == 'en' else "Mamlakat_Imiji"
-        queryset = Posts.objects.filter(category=query_word)
-        search_query = request.query_params.get('q', '')
-
-        if search_query:
-            queryset = queryset.filter(Q(title__contains=search_query) | Q(text__contains=search_query))
-       
-        paginator = self.pagination_class()
-        page = paginator.paginate_queryset(queryset, request)
-        if page is not None:
-            print(page)
-            serializer = PostSerializer(page, many=True)
-            return paginator.get_paginated_response(serializer.data)
-        serializer = PostSerializer(queryset, many=True)
-        return Response(serializer.data) 
 
 class ArticleViewSet(ViewSet):
     pagination_class = PageNumberPagination
@@ -118,18 +89,17 @@ class ArticleViewSet(ViewSet):
         paginator = self.pagination_class()
         page = paginator.paginate_queryset(queryset, request)
         if page is not None:
-            print(page)
             serializer = PostSerializer(page, many=True)
             return paginator.get_paginated_response(serializer.data)
         serializer = PostSerializer(queryset, many=True)
         return Response(serializer.data)
     
 
-class ScientificArticles(ViewSet):
+class ScientificEssaysViewSet(ViewSet):
     pagination_class = PageNumberPagination
     def list(self, request):
         language = request.LANGUAGE_CODE
-        query_word = "Scientific_Articles" if language == 'en' else "Ilmiy_Maqolalar"
+        query_word = "Scientific_Essays" if language == 'en' else "Ilmiy_tezislar"
         queryset = Posts.objects.filter(category=query_word)
         search_query = request.query_params.get('q', '')
 
@@ -139,7 +109,6 @@ class ScientificArticles(ViewSet):
         paginator = self.pagination_class()
         page = paginator.paginate_queryset(queryset, request)
         if page is not None:
-            print(page)
             serializer = PostSerializer(page, many=True)
             return paginator.get_paginated_response(serializer.data)
         serializer = PostSerializer(queryset, many=True)
@@ -157,11 +126,30 @@ class BooksViewSet(ViewSet):
         serializer.save()
         return Response(serializer.data)
 
-class InternationalProjects(ViewSet):
+class InternationalRelations(ModelViewSet):
+    pagination_class = PageNumberPagination
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        language = self.request.LANGUAGE_CODE
+        query_word = "International_Relations" if language == 'en' else "Xalqaro_munosabatlar"
+        queryset = Posts.objects.filter(category=query_word)
+        
+        search_query = self.request.query_params.get('q', '')
+        if search_query:
+            queryset = queryset.filter(Q(title__contains=search_query) | Q(text__contains=search_query))
+       
+        paginator = self.pagination_class()
+        paginated_queryset = paginator.paginate_queryset(queryset, self.request)
+        if paginated_queryset is not None:
+            return paginated_queryset
+        return queryset
+    
+class MagazinesViewSet(ViewSet):
     pagination_class = PageNumberPagination
     def list(self, request):
         language = request.LANGUAGE_CODE
-        query_word = "International_Projects" if language == 'en' else "Xalqaro_Loyihalar"
+        query_word = "Magazines" if language == 'en' else "Jurnallar"
         queryset = Posts.objects.filter(category=query_word)
         
         search_query = request.query_params.get('q', '')
@@ -172,22 +160,71 @@ class InternationalProjects(ViewSet):
         paginator = self.pagination_class()
         page = paginator.paginate_queryset(queryset, request)
         if page is not None:
-            print(page)
             serializer = PostSerializer(page, many=True)
             return paginator.get_paginated_response(serializer.data)
         serializer = PostSerializer(queryset, many=True)
         return Response(serializer.data)
     
-class SuggestionViewSet(ViewSet):    
+
+class PhotoViewSet(ViewSet):
+    pagination_class = PageNumberPagination
     def list(self, request):
-        suggestions = SuggestionModel.objects.all()
-        serializer = SuggestionSerializer(suggestions, many=True)
+        language = request.LANGUAGE_CODE
+        query_word = "Photo" if language == 'en' else "Foto_lavhalar"
+        queryset = Posts.objects.filter(category=query_word)
+        
+        search_query = request.query_params.get('q', '')
+        
+        if search_query:
+            queryset = queryset.filter(Q(title__contains=search_query) | Q(text__contains=search_query))
+       
+        paginator = self.pagination_class()
+        page = paginator.paginate_queryset(queryset, request)
+        if page is not None:
+            serializer = PostSerializer(page, many=True)
+            return paginator.get_paginated_response(serializer.data)
+        serializer = PostSerializer(queryset, many=True)
         return Response(serializer.data)
-    def create(self, request):
-        serializer = SuggestionSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
+    
+class PoetryViewSet(ViewSet):
+    pagination_class = PageNumberPagination
+    def list(self, request):
+        language = request.LANGUAGE_CODE
+        query_word = "Poetry" if language == 'en' else "Sheriyat"
+        queryset = Posts.objects.filter(category=query_word)
+        
+        search_query = request.query_params.get('q', '')
+        
+        if search_query:
+            queryset = queryset.filter(Q(title__contains=search_query) | Q(text__contains=search_query))
+       
+        paginator = self.pagination_class()
+        page = paginator.paginate_queryset(queryset, request)
+        if page is not None:
+            serializer = PostSerializer(page, many=True)
+            return paginator.get_paginated_response(serializer.data)
+        serializer = PostSerializer(queryset, many=True)
         return Response(serializer.data)
+    
+class StoriesViewSet(ViewSet):
+    pagination_class = PageNumberPagination
+    def list(self, request):
+        language = request.LANGUAGE_CODE
+        query_word = "Stories" if language == 'en' else "Hikoyalar"        
+        queryset = Posts.objects.filter(category=query_word)
+        search_query = request.query_params.get('q', '')
+
+        if search_query:
+            queryset = queryset.filter(Q(title__contains=search_query) | Q(text__contains=search_query))
+       
+        paginator = self.pagination_class()
+        page = paginator.paginate_queryset(queryset, request)
+        if page is not None:
+            serializer = PostSerializer(page, many=True)
+            return paginator.get_paginated_response(serializer.data)
+        serializer = PostSerializer(queryset, many=True)
+        return Response(serializer.data)
+    
 
 
 
