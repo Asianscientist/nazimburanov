@@ -79,6 +79,10 @@ DATABASES = {
     }
 }
 
+TRANSLATABLE_MODEL_MODULES = [
+    'main.models',  # Replace 'myapp' with the actual name of your app
+]
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'user.authentication.CsrfExemptSessionAuthentication',
