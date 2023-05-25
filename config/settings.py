@@ -33,13 +33,6 @@ INSTALLED_APPS = [
     "user.apps.UserConfig"
 ]
 
-from django.conf import settings
-
-settings.configure(
-# ...
-    ROOT_URLCONF=__name__,
-# ...
-    ),
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
