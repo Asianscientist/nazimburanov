@@ -4,8 +4,3 @@ mydatabase
 migrations/
 __pycache__
 
-media/books/
-media/images/
-media/video/
-media/suggestions/
-media/certificates/
