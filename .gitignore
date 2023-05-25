@@ -1,13 +1,11 @@
-*.pyc
-__pycache__/
-media/
-static/
-mydatabase
-
-# Ignore environment-specific settings
-.env
 venv/
-# Ignore IDE-specific files (optional)
-.vscode/
-.idea/
-**/migrations
+.env
+mydatabase
+migrations/
+__pycache__
+
+media/books/
+media/images/
+media/video/
+media/suggestions/
+media/certificates/
