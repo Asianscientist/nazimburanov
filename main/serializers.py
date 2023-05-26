@@ -8,7 +8,9 @@ class PostSerializer(serializers.ModelSerializer):
     picture = serializers.ImageField()
     class Meta:
         model = Posts
-        fields = "__all__"
+        fields = ['title', 'title_en', 'title_uz', 'text', 'text_en', 'text_uz', 'picture', 'category', 'category_en', 'category_uz']
+        extra_kwargs = {'title_en':{'required':True}, 'title_uz':{'required':True}, 'text_en':{'required':True}, 'text_uz':{'required':True}, \
+                        'category_en':{'required':True}, 'category_uz':{'required':True}, }
 
 class BookSerializer(serializers.ModelSerializer):
     file = serializers.FileField(

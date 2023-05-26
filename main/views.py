@@ -22,6 +22,7 @@ class HomePageModelViewSet(ModelViewSet):
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'text']
+    http_method_names = ['get', 'post']
         
     def get_queryset(self):
             queryset = self.queryset
