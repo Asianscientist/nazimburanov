@@ -1,4 +1,4 @@
-from .models import Posts, VideoModel, Product, BooksModel
+from .models import Posts, VideoModel, BooksModel
 from django.contrib import admin
 from modeltranslation.translator import TranslationOptions, register, translator
 
@@ -8,9 +8,13 @@ class PostTranslationOptions(TranslationOptions):
     fields = ('title', 'text', "category")
     required_languages = ("en","uz")
 
-# translator.register(Posts, PostTranslationOptions)
-
 
 @register(BooksModel)
 class BooksTranslationOptions(TranslationOptions):
     fields = ("title", "text")
+
+
+@register(VideoModel)
+class VideoTranslationOptions(TranslationOptions):
+    fields = ("title", "text")
+

@@ -6,25 +6,25 @@ from django.utils.translation import gettext_lazy as _
     
 class Posts(models.Model):
     MY_CHOICES = (
-        ("News", _("News")),
-        ("Yangiliklar", _("Yangiliklar")),
-        ("Articles", _("Articles")),
-        ("Maqolalar", _("Maqolalar")),
-        ("Scientific_Essays", _("Scientific Essays")),
-        ("Ilmiy_tezislar", _("Ilmiy Tezislar")),
-        ("Books", _("Books")),
-        ("Kitoblar", _("Kitoblar")),
-        ("International_Relations", _("International Relations")),
-        ("Xalqaro_munosabatlar", _("Xalqaro munosabatlar")),
-        ("Magazines", _("Magazines")),
-        ("Jurnallar", _("Jurnallar")),
-        ("Photo", _("Photos")),
-        ("Foto_lavhalar", _("Foto Lavhalar")),
-        ("Poetry", _("Poetry")),
-        ("Sheriyat", _("She'riyat")),
-        ("Stories", _("Stories")),
-        ("Hikoyalar", _("Hikoyalar")),
-        # ("Yol ocherklari", _("Yol_ocherklari")),
+        ("News", "News"),
+        ("Yangiliklar", "Yangiliklar"),
+        ("Articles", "Articles"),
+        ("Maqolalar", "Maqolalar"),
+        ("Scientific_Essays", "Scientific Essays"),
+        ("Ilmiy_tezislar", "Ilmiy Tezislar"),
+        ("Books", "Books"),
+        ("Kitoblar", "Kitoblar"),
+        ("International_Relations", "International Relations"),
+        ("Xalqaro_munosabatlar", "Xalqaro munosabatlar"),
+        ("Magazines", "Magazines"),
+        ("Jurnallar", "Jurnallar"),
+        ("Photos", "Photos"),
+        ("Foto_lavhalar", "Foto Lavhalar"),
+        ("Poetry", "Poetry"),
+        ("Sheriyat", "She'riyat"),
+        ("Stories", "Stories"),
+        ("Hikoyalar", "Hikoyalar"),
+        # ("Yol ocherklari", "Yol_ocherklari"),
     )
     title = models.CharField(max_length=500)
     text = models.TextField(blank=True, null=True)
@@ -55,11 +55,4 @@ class BooksModel(models.Model):
     def __str__(self):
         return self.title
 
-class Product(models.Model):
-    title = models.CharField(verbose_name="Title", max_length=500)
-    text = models.TextField(verbose_name="Description")
-
-    def __str__(self):
-        return self.title
-    
 

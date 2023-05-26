@@ -3,4 +3,5 @@ venv/
 mydatabase
 migrations/
 __pycache__
-
+**/__pycache__
+*.pyc

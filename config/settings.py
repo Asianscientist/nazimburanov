@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-o)qyspnlzg(j0c#!lungryt-+^w5d*r&c=u3871%a%m-f9(@^c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['nazimburanov.uz']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -79,9 +79,9 @@ DATABASES = {
     }
 }
 
-TRANSLATABLE_MODEL_MODULES = [
-    'main.models',  # Replace 'myapp' with the actual name of your app
-]
+# TRANSLATABLE_MODEL_MODULES = [
+#     'main.models',  # Replace 'myapp' with the actual name of your app
+# ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -92,7 +92,7 @@ REST_FRAMEWORK = {
     ],
     
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 5,  
+    'PAGE_SIZE': 10,  
     
     }
 
@@ -118,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "en"
 LANGUAGES = (
     ('en', _('English')),
     ('uz', _('Uzbek')),

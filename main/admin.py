@@ -19,3 +19,8 @@ class PostAdmin(TranslationAdmin):
 @admin.register(BooksModel)
 class BooksAdmin(TranslationAdmin):
     list_display = ("title", "text")
+
+
+@admin.register(VideoModel)
+class VideoAdmin(TranslationAdmin):
+    list_display = ("title", "text")

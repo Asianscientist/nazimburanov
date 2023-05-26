@@ -1,18 +1,26 @@
 from django import urls
-from django.urls import path
-from .views import HomePageViewSet, NewsViewSet, \
- ScientificEssaysViewSet, InternationalRelations, BooksViewSet, StoriesViewSet
+from django.urls import path, include
+from .views import HomePageModelViewSet, NewsModelViewSet,  \
+ ScientificEssaysViewSet, InternationalRelationsViewSet, BooksModelViewSet, StoriesModelViewSet 
 from rest_framework.routers import DefaultRouter
+from .views import ArticleModelViewSet, VideoModelViewSet, PoetryModelViewSet, PhotoModelViewSet, \
+        MagazinesModelViewSet
+
+app_name = 'main'
+
 router = DefaultRouter()
-router.register("", HomePageViewSet, basename="home")
-router.register("news", NewsViewSet, basename="news")
+router.register("home", HomePageModelViewSet, basename='home')
+router.register("news", NewsModelViewSet, basename='news')
+router.register("articles", ArticleModelViewSet, basename="articles")
 router.register("scientific_essays", ScientificEssaysViewSet, basename="scientific_essays")
-router.register("international_relations", InternationalRelations, basename="international_relations")
-router.register("books", BooksViewSet, basename="books")
-router.register("stories", StoriesViewSet, basename="stories")
-
-
+router.register("international_relations", InternationalRelationsViewSet, basename="international_relations")
+router.register("books", BooksModelViewSet, basename="books")
+router.register("stories", StoriesModelViewSet, basename="stories")
+router.register("videos", VideoModelViewSet, basename="videos")
+router.register("poetry", PoetryModelViewSet, basename="poetry")
+router.register("photos", PhotoModelViewSet, basename="photo")
+router.register("magazines", MagazinesModelViewSet, basename="magzines")
 
 urlpatterns = [
-
-] + router.urls
+        path('', include(router.urls))
+] 

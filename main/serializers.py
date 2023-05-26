@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Posts, BooksModel
+from .models import Posts, BooksModel, VideoModel
 
 
 
@@ -19,3 +19,8 @@ class BookSerializer(serializers.ModelSerializer):
         model = BooksModel
         fields = "__all__"
 
+class VideoSerializer(serializers.ModelSerializer):
+    video = serializers.FileField()
+    class Meta:
+        model = VideoModel
+        fields = ['title', 'video', 'text']
