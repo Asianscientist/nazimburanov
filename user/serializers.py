@@ -3,7 +3,6 @@ from rest_framework import serializers
 from rest_framework.exceptions import AuthenticationFailed
 
 from django.contrib.auth.models import User
-from .models import MyModel
 from rest_framework import serializers
 
 
@@ -43,8 +42,3 @@ class UserSignUpSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
-
-class MyChoicSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MyModel
-        fields = "__all__"

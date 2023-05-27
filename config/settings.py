@@ -30,7 +30,9 @@ INSTALLED_APPS = [
     'modeltranslation',
     # 'django.contrib.admin',
     "main.apps.MainConfig",
-    "user.apps.UserConfig"
+    "user.apps.UserConfig",
+    'drf_yasg',
+
 ]
 
 

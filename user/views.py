@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from .serializers import UserSignInSerializer, UserSignUpSerializer, MyChoicSerializer
+from .serializers import UserSignInSerializer, UserSignUpSerializer
 # Create your views here.
 from django.contrib.auth import logout
 from rest_framework.viewsets import ViewSet, ModelViewSet
@@ -8,7 +8,6 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authentication import SessionAuthentication
 from django.contrib.auth import login, logout
-from .models import MyModel
 from .authentication import CsrfExemptSessionAuthentication
 
 
@@ -39,10 +38,6 @@ class SignUpView(APIView):
         # perform further actions with the created user
         return Response("User Singed up")
 
-
-class MyViewSet(ModelViewSet):
-    queryset = MyModel.objects.all()
-    serializer_class = MyChoicSerializer
 
 
 
