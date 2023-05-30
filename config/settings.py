@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "rest_framework",
-    'modeltranslation',
+    # 'modeltranslation',
     # 'django.contrib.admin',
     "main.apps.MainConfig",
     "user.apps.UserConfig",

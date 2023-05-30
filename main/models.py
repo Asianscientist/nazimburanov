@@ -1,30 +1,20 @@
 from django.db import models
 from datetime import datetime
-from modeltranslation.translator import TranslationOptions
-from django.utils.translation import gettext_lazy as _
-
     
 class Posts(models.Model):
     MY_CHOICES = (
-        ("News", "News"),
+        # ("News", "News"),
         ("Yangiliklar", "Yangiliklar"),
-        ("Articles", "Articles"),
+        # ("Articles", "Articles"),
         ("Maqolalar", "Maqolalar"),
-        ("Scientific_Essays", "Scientific Essays"),
-        ("Ilmiy_tezislar", "Ilmiy Tezislar"),
-        ("Books", "Books"),
-        ("Kitoblar", "Kitoblar"),
-        ("International_Relations", "International Relations"),
+        # ("Scientific_Essays", "Scientific Essays"),
+        ("Ilmiy_Maqolalar", "Ilmiy Maqolalar"),
         ("Xalqaro_munosabatlar", "Xalqaro munosabatlar"),
-        ("Magazines", "Magazines"),
         ("Jurnallar", "Jurnallar"),
-        ("Photos", "Photos"),
         ("Foto_lavhalar", "Foto Lavhalar"),
-        ("Poetry", "Poetry"),
         ("Sheriyat", "She'riyat"),
-        ("Stories", "Stories"),
         ("Hikoyalar", "Hikoyalar"),
-        # ("Yol ocherklari", "Yol_ocherklari"),
+        ("Yol_ocherklari", "Yo'l ocherklari"),
     )
     title = models.CharField(max_length=500)
     text = models.TextField(blank=True, null=True)
