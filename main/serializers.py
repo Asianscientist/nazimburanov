@@ -1,7 +1,11 @@
 from rest_framework import serializers
-from .models import Posts, BooksModel, VideoModel
+from .models import Posts, BooksModel, VideoModel, CertificateModel
 
-
+class CertificateSerializer(serializers.ModelSerializer):
+    picture = serializers.ImageField()
+    class Meta:
+        model = CertificateModel
+        fields = "__all__"
 
 class PostSerializer(serializers.ModelSerializer):
     category = serializers.ChoiceField(choices=Posts.MY_CHOICES)

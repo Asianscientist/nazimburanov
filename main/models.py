@@ -17,8 +17,8 @@ class Posts(models.Model):
         ("Yol_ocherklari", "Yo'l ocherklari"),
     )
     title = models.CharField(max_length=500)
-    text = models.TextField(blank=True, null=True)
-    picture = models.ImageField(upload_to='images/', blank=True, null=True)
+    text = models.TextField()
+    picture = models.ImageField(upload_to='images/')
     category = models.CharField(max_length=100, choices=MY_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -29,7 +29,7 @@ class Posts(models.Model):
 class VideoModel(models.Model):
     title = models.CharField(max_length=500)
     video = models.FileField(upload_to="video/")
-    text = models.TextField(null=True, blank=True)
+    text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
 
@@ -39,10 +39,17 @@ class VideoModel(models.Model):
 
 class BooksModel(models.Model):
     title = models.CharField(max_length=500)
-    text = models.TextField(blank=True, null=True)
+    text = models.TextField()
     file = models.FileField(upload_to="books/")
     
     def __str__(self):
         return self.title
 
+class CertificateModel(models.Model):
+    picture = models.ImageField(upload_to='certificates/')
+    text = models.TextField()
 
+    def __str__(self):
+        return self.text[:100]
+    
+    

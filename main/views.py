@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet, ModelViewSet
 from rest_framework.response import Response
 from django.http import HttpResponse
-from .serializers import PostSerializer, BookSerializer, VideoSerializer
+from .serializers import PostSerializer, BookSerializer, VideoSerializer, CertificateSerializer
 from django.db.models import Q
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import permissions
@@ -13,7 +13,7 @@ from rest_framework import generics
 from django.utils.translation import get_language, activate, gettext
 from . import utils
 from rest_framework import filters
-from .models import Posts, BooksModel, VideoModel
+from .models import Posts, BooksModel, VideoModel, CertificateModel
 # Create your views here.
 
 
@@ -22,7 +22,7 @@ class HomePageModelViewSet(ModelViewSet):
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'text']
-    http_method_names = ['get', 'post', 'put', 'delete']
+    http_method_names = ['get', 'post', 'patch', 'delete']
         
     def get_queryset(self):
             queryset = self.queryset
@@ -36,10 +36,10 @@ class NewsModelViewSet(ModelViewSet):
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'text']
-    http_method_names = ['get', 'post', 'put', 'delete']
+    http_method_names = ['get', 'post', 'patch', 'delete']
         
     def get_queryset(self):
-            queryset = self.queryset.filter(category_en="News")
+            queryset = self.queryset.filter(category="Yangiliklar")
             search_q = self.request.query_params.get('q')
             if search_q:
                 queryset = queryset.filter(Q(title__contains=search_q) | Q(text__contains=search_q))
@@ -49,26 +49,26 @@ class ArticleModelViewSet(ModelViewSet):
     serializer_class = PostSerializer
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
-    http_method_names = ['get', 'post', 'put', 'delete']
+    http_method_names = ['get', 'post', 'patch', 'delete']
     search_fields = ['title', 'text']
     
     def get_queryset(self):
-        queryset = self.queryset.filter(category_en="Articles")
+        queryset = self.queryset.filter(category="Maqolalar")
         search_q = self.request.query_params.get('q')
         if search_q:
             queryset = queryset.filter(Q(title__contains=search_q) | Q(text__contains=search_q))
         return queryset 
     
 
-class ScientificEssaysViewSet(ViewSet):
+class ScientificArticlesViewSet(ViewSet):
     serializer_class = PostSerializer
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'text']
-    http_method_names = ['get', 'post', 'put', 'delete']
+    http_method_names = ['get', 'post', 'patch', 'delete']
     
     def get_queryset(self):
-        queryset = self.queryset.filter(category_en="Scientific_Essays")
+        queryset = self.queryset.filter(category="Ilmiy_Maqolalar")
         search_q = self.request.query_params.get('q')
         if search_q:
             queryset = queryset.filter(Q(title__contains=search_q) | Q(text__contains=search_q))
@@ -80,7 +80,7 @@ class BooksModelViewSet(ModelViewSet):
     queryset = BooksModel.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'text']
-    http_method_names = ['get', 'post', 'put', 'delete']
+    http_method_names = ['get', 'post', 'patch', 'delete']
         
     def get_queryset(self):
         queryset = self.queryset
@@ -95,10 +95,10 @@ class InternationalRelationsViewSet(ModelViewSet):
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'text']
-    http_method_names = ['get', 'post', 'put', 'delete']
+    http_method_names = ['get', 'post', 'patch', 'delete']
 
     def get_queryset(self):
-        queryset = self.queryset.filter(category_en="International_Relations")
+        queryset = self.queryset.filter(category="Xalqaro_munosabatlar")
         search_q = self.request.query_params.get('q')
         if search_q:
             queryset = queryset.filter(Q(title__contains=search_q) | Q(text__contains=search_q))
@@ -109,10 +109,10 @@ class MagazinesModelViewSet(ModelViewSet):
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'text']
-    http_method_names = ['get', 'post', 'put', 'delete']
+    http_method_names = ['get', 'post', 'patch', 'delete']
     
     def get_queryset(self):
-        queryset = self.queryset.filter(category_en="Magazines")
+        queryset = self.queryset.filter(category="Jurnallar")
         search_q = self.request.query_params.get('q')
         if search_q:
             queryset = queryset.filter(Q(title__contains=search_q) | Q(text__contains=search_q))
@@ -125,10 +125,10 @@ class PhotoModelViewSet(ModelViewSet):
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'text']
-    http_method_names = ['get', 'post', 'put', 'delete']
+    http_method_names = ['get', 'post', 'patch', 'delete']
     
     def get_queryset(self):
-        queryset = self.queryset.filter(category_en="Photos")
+        queryset = self.queryset.filter(category="Foto_lavhalar")
         search_q = self.request.query_params.get('q')
         if search_q:
             queryset = queryset.filter(Q(title__contains=search_q) | Q(text__contains=search_q))
@@ -139,10 +139,10 @@ class PoetryModelViewSet(ModelViewSet):
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'text']
-    http_method_names = ['get', 'post', 'put', 'delete']
+    http_method_names = ['get', 'post', 'patch', 'delete']
     
     def get_queryset(self):
-        queryset = self.queryset.filter(category_en="Poetry")
+        queryset = self.queryset.filter(category="Sheriyat")
         search_q = self.request.query_params.get('q')
         if search_q:
             queryset = queryset.filter(Q(title__contains=search_q) | Q(text__contains=search_q))
@@ -153,19 +153,38 @@ class StoriesModelViewSet(ModelViewSet):
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'text']
-    http_method_names = ['get', 'post', 'put', 'delete']
+    http_method_names = ['get', 'post', 'patch', 'delete']
     
     def get_queryset(self):
-        queryset = self.queryset.filter(category_en="Stories")
+        queryset = self.queryset.filter(category="Hikoyalar")
         search_q = self.request.query_params.get('q')
         if search_q:
             queryset = queryset.filter(Q(title__contains=search_q) | Q(text__contains=search_q))
         return queryset
+
+class OcherklarModelViewSet(ModelViewSet):
+    serializer_class = PostSerializer
+    queryset = Posts.objects.all()
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title', 'text']
+    http_method_names = ['get', 'post', 'patch', 'delete']
+    
+    def get_queryset(self):
+        queryset = self.queryset.filter(category="Yol_ocherklari")
+        search_q = self.request.query_params.get('q')
+        if search_q:
+            queryset = queryset.filter(Q(title__contains=search_q) | Q(text__contains=search_q))
+        return queryset  
         
 class VideoModelViewSet(ModelViewSet):
     serializer_class = VideoSerializer
     queryset = VideoModel.objects.all()
-    http_method_names = ['get', 'post', 'put', 'delete']
+    http_method_names = ['get', 'post', 'patch', 'delete']
+
+class CertificateModelViewSet(ModelViewSet):
+    serializer_class = CertificateSerializer
+    queryset = CertificateModel.objects.all()
+    http_method_names = ['get', 'post', 'patch', 'delete']
         
 class HelloWorld(APIView):
     def get(self, request):
