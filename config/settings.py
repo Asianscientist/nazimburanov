@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     "main.apps.MainConfig",
     "user.apps.UserConfig",
     'drf_yasg',
-
+    'corsheaders',
 ]
 
 
@@ -41,6 +41,8 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
+    
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -66,7 +68,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
-
+CORS_ORIGIN_ALLOW_ALL = True
 LOCALE_PATHS = [
     BASE_DIR / 'locale/',
 ]
