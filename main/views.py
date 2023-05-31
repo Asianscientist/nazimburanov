@@ -22,7 +22,7 @@ class HomePageModelViewSet(ModelViewSet):
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'text']
-    http_method_names = ['get', 'post', 'patch', 'delete']
+    http_method_names = ['get']
         
     def get_queryset(self):
             queryset = self.queryset
@@ -36,7 +36,7 @@ class NewsModelViewSet(ModelViewSet):
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'text']
-    http_method_names = ['get', 'post', 'patch', 'delete']
+    http_method_names = ['get']
         
     def get_queryset(self):
             queryset = self.queryset.filter(category="Yangiliklar")
@@ -49,7 +49,7 @@ class ArticleModelViewSet(ModelViewSet):
     serializer_class = PostSerializer
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
-    http_method_names = ['get', 'post', 'patch', 'delete']
+    http_method_names = ['get']
     search_fields = ['title', 'text']
     
     def get_queryset(self):
@@ -65,7 +65,7 @@ class ScientificArticlesViewSet(ViewSet):
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'text']
-    http_method_names = ['get', 'post', 'patch', 'delete']
+    http_method_names = ['get']
     
     def get_queryset(self):
         queryset = self.queryset.filter(category="Ilmiy_Maqolalar")
@@ -80,7 +80,7 @@ class BooksModelViewSet(ModelViewSet):
     queryset = BooksModel.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'text']
-    http_method_names = ['get', 'post', 'patch', 'delete']
+    http_method_names = ['get']
         
     def get_queryset(self):
         queryset = self.queryset
@@ -95,7 +95,7 @@ class InternationalRelationsViewSet(ModelViewSet):
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'text']
-    http_method_names = ['get', 'post', 'patch', 'delete']
+    http_method_names = ['get']
 
     def get_queryset(self):
         queryset = self.queryset.filter(category="Xalqaro_munosabatlar")
@@ -109,7 +109,7 @@ class MagazinesModelViewSet(ModelViewSet):
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'text']
-    http_method_names = ['get', 'post', 'patch', 'delete']
+    http_method_names = ['get']
     
     def get_queryset(self):
         queryset = self.queryset.filter(category="Jurnallar")
@@ -125,7 +125,7 @@ class PhotoModelViewSet(ModelViewSet):
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'text']
-    http_method_names = ['get', 'post', 'patch', 'delete']
+    http_method_names = ['get']
     
     def get_queryset(self):
         queryset = self.queryset.filter(category="Foto_lavhalar")
@@ -139,7 +139,7 @@ class PoetryModelViewSet(ModelViewSet):
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'text']
-    http_method_names = ['get', 'post', 'patch', 'delete']
+    http_method_names = ['get']
     
     def get_queryset(self):
         queryset = self.queryset.filter(category="Sheriyat")
@@ -153,7 +153,7 @@ class StoriesModelViewSet(ModelViewSet):
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'text']
-    http_method_names = ['get', 'post', 'patch', 'delete']
+    http_method_names = ['get']
     
     def get_queryset(self):
         queryset = self.queryset.filter(category="Hikoyalar")
@@ -167,7 +167,7 @@ class OcherklarModelViewSet(ModelViewSet):
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'text']
-    http_method_names = ['get', 'post', 'patch', 'delete']
+    http_method_names = ['get']
     
     def get_queryset(self):
         queryset = self.queryset.filter(category="Yol_ocherklari")
@@ -179,12 +179,12 @@ class OcherklarModelViewSet(ModelViewSet):
 class VideoModelViewSet(ModelViewSet):
     serializer_class = VideoSerializer
     queryset = VideoModel.objects.all()
-    http_method_names = ['get', 'post', 'patch', 'delete']
+    http_method_names = ['get']
 
 class CertificateModelViewSet(ModelViewSet):
     serializer_class = CertificateSerializer
     queryset = CertificateModel.objects.all()
-    http_method_names = ['get', 'post', 'patch', 'delete']
+    http_method_names = ['get']
         
 class HelloWorld(APIView):
     def get(self, request):
