@@ -10,6 +10,8 @@ class CertificateSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     category = serializers.ChoiceField(choices=Posts.MY_CHOICES)
     picture = serializers.ImageField()
+    picture2 = serializers.ImageField(required=False)
+    picture3 = serializers.ImageField(required=False)
     class Meta:
         model = Posts
         fields = "__all__"
