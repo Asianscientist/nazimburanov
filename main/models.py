@@ -19,6 +19,8 @@ class Posts(models.Model):
     title = models.CharField(max_length=500)
     text = models.TextField()
     picture = models.ImageField(upload_to='images/')
+    picture2 = models.ImageField(upload_to='images/', null=True, blank=True)
+    picture3 = models.ImageField(upload_to='images/', null=True, blank=True)
     category = models.CharField(max_length=100, choices=MY_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
 
