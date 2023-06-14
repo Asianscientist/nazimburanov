@@ -60,7 +60,7 @@ class ArticleModelViewSet(ModelViewSet):
         return queryset 
     
 
-class ScientificArticlesViewSet(ViewSet):
+class ScientificArticlesViewSet(ModelViewSet):
     serializer_class = PostSerializer
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
