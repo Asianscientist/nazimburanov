@@ -69,11 +69,12 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
-CORS_ALLOWED_ORIGINS = [
-    # "https://example.com",
-    "http://localhost:3000",
-    # "http://127.0.0.1:9000",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     # "https://example.com",
+#     "http://localhost:3000",
+#     # "http://127.0.0.1:9000",
+# ]
+CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOW_METHODS = (
     "DELETE",
