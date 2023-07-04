@@ -31,7 +31,7 @@ class Posts(models.Model):
     
 class VideoModel(models.Model):
     title = models.CharField(max_length=500)
-    video = models.FileField(upload_to="video/")
+    video = models.URLField(max_length=200)
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
