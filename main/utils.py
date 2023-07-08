@@ -1,3 +1,7 @@
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
+
+
 # MY_CHOICES = (
 #         ("News", _("News")),
 #         ("Yangiliklar", _("Yangiliklar")),
@@ -52,3 +56,18 @@ def pair_language(lang):
         speeches = "Speeches" if lang == 'en' else "Nutqlar"
         presentation = "Presentations" if lang == 'en' else "Prezentatsiyalar"
         return [news, articles, countryimage, scientific_articles, books, international_projects]
+    
+class CustomPagination(PageNumberPagination):
+    page_size = 10
+
+    def get_paginated_response(self, data):
+        return Response({
+            'page': self.page.number,
+            'next': self.get_next_link(),
+            'previous': self.get_previous_link(),
+            'count': self.page.paginator.count,
+            'page_size': self.page_size,
+            'results': data
+        })
+    
+    
