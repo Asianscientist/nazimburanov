@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet, ModelViewSet
 from rest_framework.response import Response
 from django.http import HttpResponse
-from .serializers import PostSerializer, BookSerializer, VideoSerializer, CertificateSerializer
+from .serializers import PostSerializer, BookSerializer, VideosSerializer, CertificateSerializer
 from django.db.models import Q
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import permissions
@@ -60,7 +60,7 @@ class ArticleModelViewSet(ModelViewSet):
         return queryset 
     
 
-class ScientificArticlesViewSet(ViewSet):
+class ScientificArticlesViewSet(ModelViewSet):
     serializer_class = PostSerializer
     queryset = Posts.objects.all()
     filter_backends = [filters.SearchFilter]
@@ -177,7 +177,7 @@ class OcherklarModelViewSet(ModelViewSet):
         return queryset  
         
 class VideoModelViewSet(ModelViewSet):
-    serializer_class = VideoSerializer
+    serializer_class = VideosSerializer
     queryset = VideoModel.objects.all()
     http_method_names = ['get', 'post', 'patch', 'delete']
 

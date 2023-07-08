@@ -18,6 +18,7 @@ class Posts(models.Model):
     )
     title = models.CharField(max_length=500)
     text = models.TextField()
+    author = models.CharField(null=True, blank=True, max_length=500)
     picture = models.ImageField(upload_to='images/')
     picture2 = models.ImageField(upload_to='images/', null=True, blank=True)
     picture3 = models.ImageField(upload_to='images/', null=True, blank=True)
@@ -30,7 +31,7 @@ class Posts(models.Model):
     
 class VideoModel(models.Model):
     title = models.CharField(max_length=500)
-    video = models.FileField(upload_to="video/")
+    video = models.URLField(max_length=200)
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -42,6 +43,7 @@ class VideoModel(models.Model):
 class BooksModel(models.Model):
     title = models.CharField(max_length=500)
     text = models.TextField()
+    author = models.CharField(null=True, blank=True, max_length=500)
     file = models.FileField(upload_to="books/")
     
     def __str__(self):

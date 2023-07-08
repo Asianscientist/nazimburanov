@@ -24,8 +24,8 @@ class BookSerializer(serializers.ModelSerializer):
         model = BooksModel
         fields = "__all__"
 
-class VideoSerializer(serializers.ModelSerializer):
-    video = serializers.FileField()
+class VideosSerializer(serializers.ModelSerializer):
+    video = serializers.URLField(max_length=200)
     class Meta:
         model = VideoModel
-        fields = ['title', 'video', 'text']
+        fields = ['id', 'title', 'video', 'text']
