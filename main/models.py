@@ -51,9 +51,8 @@ class BooksModel(models.Model):
 
 class CertificateModel(models.Model):
     picture = models.ImageField(upload_to='certificates/')
-    text = models.TextField()
+    file = models.FileField(upload_to='certificates/', null=True, blank=True)
 
     def __str__(self):
-        return self.text[:100]
-    
+        return self.picture.name
     

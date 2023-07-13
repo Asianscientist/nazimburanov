@@ -3,6 +3,7 @@ from .models import Posts, BooksModel, VideoModel, CertificateModel
 
 class CertificateSerializer(serializers.ModelSerializer):
     picture = serializers.ImageField()
+    file = serializers.FileField(required=False)
     class Meta:
         model = CertificateModel
         fields = "__all__"
