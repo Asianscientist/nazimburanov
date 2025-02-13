@@ -73,7 +73,7 @@ CORS_ALLOWED_ORIGINS = [
       "https://nazimburanov.uz",
      "http://nazimburanov.uz"
 #     # "http://127.0.0.1:9000",
-# # ]
+]
 # CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS=True
 CSRF_COOKIE_SECURE=True
